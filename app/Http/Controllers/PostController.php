@@ -17,8 +17,28 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request) {
-        Post::create($request->all());
-        return redirect()->route('posts.index');
+    public function store(Request $request)
+{
+    // Validazione
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'image' => 'nullable|image|max:2048', // opzionale, max 2MB
+    ]);
+
+    $imagePath = null;
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('posts', 'public');
     }
+
+    Post::create([
+        'title' => $request->title,
+        'content' => $request->content,
+        'image' => $imagePath,
+    ]);
+
+    return redirect()->route('posts.index');
+}
+
 }
