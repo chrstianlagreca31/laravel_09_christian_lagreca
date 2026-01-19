@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;          // il tuo model
-use Illuminate\Http\Request;   // per la Request
-use App\Http\Controllers\Controller; // <-- aggiungi questa riga
+use App\Models\Post;        
+use Illuminate\Http\Request;   
+use App\Http\Controllers\Controller; 
 
 class PostController extends Controller
 {
@@ -19,11 +19,11 @@ class PostController extends Controller
 
     public function store(Request $request)
 {
-    // Validazione
+    
     $request->validate([
-        'title' => 'required|string|max:255',
+        'title' => 'required|string',
         'content' => 'required|string',
-        'image' => 'nullable|image|max:2048', // opzionale, max 2MB
+        'image' => 'nullable|image', 
     ]);
 
     $imagePath = null;
