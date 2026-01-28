@@ -1,52 +1,30 @@
-@extends('layouts.app')
+<x-app>
+    <h2>Crea un nuovo Post</h2>
 
-@section('content')
+    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+        @csrf
 
-<div class="row justify-content-center">
-    <div class="col-12 col-md-8">
+        <div class="mb-3">
+            <label for="title" class="form-label">Titolo</label>
+            <input type="text" name="title" id="title" class="form-control" aria-describedby="titleHelp" value="{{ old('title') }}">
+            <div id="titleHelp" class="form-text">Inserisci il titolo del post</div>
+            @error('title') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
 
-        <h2 class="mb-4">Crea un nuovo Post</h2>
+        <div class="mb-3">
+            <label for="content" class="form-label">Contenuto</label>
+            <textarea name="content" id="content" rows="5" class="form-control" aria-describedby="contentHelp">{{ old('content') }}</textarea>
+            <div id="contentHelp" class="form-text">Inserisci il contenuto del post</div>
+            @error('content') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
 
-        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
-            @csrf
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" name="image" id="image" class="form-control" aria-describedby="imageHelp">
+            <div id="imageHelp" class="form-text">Carica un'immagine (opzionale, max 2MB)</div>
+            @error('image') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
 
-            <div class="mb-3">
-                <label for="title" class="form-label">Titolo:</label>
-                <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    class="form-control"
-                    value="{{ old('title') }}"
-                >
-            </div>
-
-            <div class="mb-3">
-                <label for="content" class="form-label">Contenuto:</label>
-                <textarea
-                    name="content"
-                    id="content"
-                    rows="6"
-                    class="form-control"
-                >{{ old('content') }}</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="image" class="form-label">Inserisci un'immagine:</label>
-                <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    class="form-control"
-                >
-            </div>
-
-            <button type="submit" class="btn btn-success">
-                Salva Post
-            </button>
-        </form>
-
-    </div>
-</div>
-
-@endsection
+        <button type="submit" class="btn btn-success">Salva</button>
+    </form>
+</x-app>
